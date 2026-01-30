@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ChevronLeft } from 'lucide-react-native';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
@@ -10,140 +10,193 @@ import { Shadows, Spacing } from '../../constants/theme';
 import { useGame } from '../../context/GameContext';
 
 const { width, height } = Dimensions.get('window');
-const NODE_WIDTH = 120;
-const NODE_HEIGHT = 60;
-const LEVEL_GAP = 100; // Horizontal gap
-const NODE_GAP = 20;   // Vertical gap
+const NODE_WIDTH = 150; // Balanced width
+const NODE_HEIGHT = 80;  // Matches actual node height
+const LEVEL_GAP = 120; // More breathing room
+const NODE_GAP = 20;   // Vertical spacing
+const LAYOUT_TYPE = 'tree'; // Switch to 'radial' for a circular view
 
 // Recursive layout calculation
 // Recursive layout calculation
 const MAX_DEPTH = 50;
 
-// Recursive layout calculation
-// Safe Layout Calculation with Cycle Detection
-const calculateLayout = (node, depth = 0, yOffset = { value: 0 }, visited = new Set()) => {
+/**
+ * calculateLayout: Recursively positions nodes in a weighted tree.
+ * @param side: -1 for Left, 1 for Right
+ */
+const calculateLayout = (node, depth = 0, side = 1, yOffset = { value: 0 }, visited = new Set()) => {
     if (!node) return null;
 
-    // Cycle detection
     if (visited.has(node.id)) {
-        console.warn("Cycle detected for node:", node.label);
         return {
             ...node,
-            id: `${node.id}_cycle_${Math.random()}`, // Unique ID for visual
+            id: `${node.id}_cycle_${Math.random()}`,
             label: `${node.label} (Cycle)`,
             children: [],
-            x: 0, y: 0, totalHeight: NODE_HEIGHT
+            x: 0, y: 0, totalHeight: NODE_HEIGHT + NODE_GAP,
+            side
         };
     }
 
     const newVisited = new Set(visited).add(node.id);
-
-    if (depth > MAX_DEPTH) {
-        return {
-            ...node,
-            id: `${node.id}_max_${Math.random()}`,
-            label: 'Max Depth Reached',
-            children: [],
-            x: 0, y: 0, totalHeight: NODE_HEIGHT
-        };
-    }
+    if (depth > MAX_DEPTH) return null;
 
     const children = Array.isArray(node.children) ? node.children : [];
-    const isLeaf = children.length === 0;
-
+    const childrenNodes = [];
     let childrenHeight = 0;
-    let childrenNodes = [];
 
-    if (!isLeaf) {
-        children.forEach(child => {
-            if (child) {
-                const childResult = calculateLayout(child, depth + 1, yOffset, newVisited);
-                if (childResult) {
-                    childrenNodes.push(childResult);
-                    childrenHeight += childResult.totalHeight;
-                }
+    children.forEach(child => {
+        if (child) {
+            const childResult = calculateLayout(child, depth + 1, side, yOffset, newVisited);
+            if (childResult) {
+                childrenNodes.push(childResult);
+                childrenHeight += childResult.totalHeight;
             }
-        });
-    }
+        }
+    });
 
-    const effectiveIsLeaf = childrenNodes.length === 0;
-    const myHeight = effectiveIsLeaf ? NODE_HEIGHT + NODE_GAP : childrenHeight;
+    const isLeaf = childrenNodes.length === 0;
+    const myHeight = isLeaf ? NODE_HEIGHT + NODE_GAP : childrenHeight;
 
     let myY;
-    if (effectiveIsLeaf) {
+    if (isLeaf) {
         myY = yOffset.value + myHeight / 2;
         yOffset.value += myHeight;
     } else {
-        const firstChildY = childrenNodes[0].y;
-        const lastChildY = childrenNodes[childrenNodes.length - 1].y;
-        myY = (firstChildY + lastChildY) / 2;
+        const firstY = childrenNodes[0].y;
+        const lastY = childrenNodes[childrenNodes.length - 1].y;
+        myY = (firstY + lastY) / 2;
     }
 
-    const myX = depth * (NODE_WIDTH + LEVEL_GAP);
-
-    // Strict Finite Checks
-    const safeX = Number.isFinite(myX) ? myX : 0;
-    const safeY = Number.isFinite(myY) ? myY : 0;
-    const safeHeight = Number.isFinite(myHeight) ? myHeight : NODE_HEIGHT;
+    // Root is always at (0, 0). Children spread left (-1) or right (1).
+    const myX = depth === 0 ? 0 : side * depth * (NODE_WIDTH + LEVEL_GAP);
 
     return {
         ...node,
         children: children,
-        note: node.note, // Preserve the definition
-        x: safeX,
-        y: safeY,
-        totalHeight: safeHeight,
-        processedChildren: childrenNodes
+        x: Number.isFinite(myX) ? myX : 0,
+        y: Number.isFinite(myY) ? myY : 0,
+        totalHeight: Number.isFinite(myHeight) ? myHeight : NODE_HEIGHT,
+        processedChildren: childrenNodes,
+        side,
+        depth
+    };
+};
+
+const calculateRadialLayout = (node, depth = 0, angle = 0, arc = 2 * Math.PI, visited = new Set()) => {
+    if (!node || depth > MAX_DEPTH || visited.has(node.id)) return null;
+
+    const newVisited = new Set(visited).add(node.id);
+    const radius = depth * (NODE_WIDTH + LEVEL_GAP);
+
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+
+    const children = Array.isArray(node.children) ? node.children : [];
+    const processedChildren = [];
+
+    if (children.length > 0) {
+        // Sub-nodes get a fraction of the parent's arc
+        const startAngle = depth === 0 ? 0 : angle - arc / 2;
+        const arcPerChild = arc / children.length;
+
+        children.forEach((child, i) => {
+            const childAngle = depth === 0
+                ? (i / children.length) * 2 * Math.PI
+                : startAngle + (i + 0.5) * arcPerChild;
+
+            // At deeper levels, we tighten the arc to keep clusters together
+            const nextArc = depth === 0 ? (2 * Math.PI) / children.length : arcPerChild * 0.8;
+
+            const result = calculateRadialLayout(child, depth + 1, childAngle, nextArc, newVisited);
+            if (result) processedChildren.push(result);
+        });
+    }
+
+    return {
+        ...node,
+        x, y, depth, side: 0, // Side is 0 for radial
+        angle,
+        processedChildren
     };
 };
 
 const processGraph = (root) => {
     if (!root) return { nodes: [], edges: [], width: 100, height: 100 };
 
-    const yOffset = { value: 0 };
-    const layoutTree = calculateLayout(root, 0, yOffset);
+    let layoutTree;
+    let canvasWidth, canvasHeight;
+    let minX = 0, maxX = 0, minY = 0, maxY = 0;
 
-    // Flatten and compute bounds
+    if (LAYOUT_TYPE === 'radial') {
+        layoutTree = calculateRadialLayout(root, 0, 0, 2 * Math.PI);
+    } else {
+        const children = Array.isArray(root.children) ? root.children : [];
+        const leftChildren = children.slice(0, Math.ceil(children.length / 2));
+        const rightChildren = children.slice(Math.ceil(children.length / 2));
+        const leftOffset = { value: 0 };
+        const rightOffset = { value: 0 };
+        const leftResults = leftChildren.map(c => calculateLayout(c, 1, -1, leftOffset));
+        const rightResults = rightChildren.map(c => calculateLayout(c, 1, 1, rightOffset));
+        const maxHeight = Math.max(leftOffset.value, rightOffset.value, NODE_HEIGHT);
+        const leftShift = (maxHeight - leftOffset.value) / 2;
+        const rightShift = (maxHeight - rightOffset.value) / 2;
+        const shiftSubtree = (node, shift) => {
+            if (!node) return;
+            node.y += shift;
+            node.processedChildren?.forEach(c => shiftSubtree(c, shift));
+        };
+        leftResults.forEach(r => shiftSubtree(r, leftShift));
+        rightResults.forEach(r => shiftSubtree(r, rightShift));
+
+        // Construct the full tree for flattening
+        layoutTree = {
+            ...root,
+            x: 0,
+            y: maxHeight / 2,
+            depth: 0,
+            side: 0,
+            processedChildren: [...leftResults, ...rightResults].filter(Boolean)
+        };
+    }
+
     const nodes = [];
     const edges = [];
-    let maxX = 0;
-    let maxY = 0;
 
-    const traverse = (node) => {
+    const flatten = (node) => {
         if (!node) return;
+        nodes.push({ id: node.id, label: node.label, note: node.note, x: node.x, y: node.y, depth: node.depth, side: node.side || 0 });
+        minX = Math.min(minX, node.x);
+        maxX = Math.max(maxX, node.x);
+        minY = Math.min(minY, node.y);
+        maxY = Math.max(maxY, node.y);
 
-        nodes.push({
-            id: node.id,
-            label: node.label,
-            note: node.note, // Pass the definition
-            x: node.x,
-            y: node.y,
-            depth: node.x / (NODE_WIDTH + LEVEL_GAP)
-        });
-
-        maxX = Math.max(maxX, node.x + NODE_WIDTH);
-        maxY = Math.max(maxY, node.y + NODE_HEIGHT / 2);
-
-        if (node.processedChildren) {
-            node.processedChildren.forEach(child => {
-                edges.push({
-                    from: { x: node.x + NODE_WIDTH, y: node.y },
-                    to: { x: child.x, y: child.y }
-                });
-                traverse(child);
+        node.processedChildren?.forEach(child => {
+            edges.push({
+                from: { x: node.x, y: node.y, side: node.side || 0, depth: node.depth },
+                to: { x: child.x, y: child.y, side: child.side || 0, depth: child.depth }
             });
-        }
+            flatten(child);
+        });
     };
 
-    traverse(layoutTree);
+    flatten(layoutTree);
 
-    // Add padding
-    return {
-        nodes,
-        edges,
-        width: Math.max(Dimensions.get('window').width, maxX + 200),
-        height: Math.max(Dimensions.get('window').height, maxY + 200)
-    };
+    // Padding & Canvas Centering Logic
+    canvasWidth = (maxX - minX) + 600;
+    canvasHeight = (maxY - minY) + 600;
+
+    // Global offset to keep everything in view
+    const xGlobalShift = -minX + 300;
+    const yGlobalShift = -minY + 300;
+
+    nodes.forEach(n => { n.x += xGlobalShift; n.y += yGlobalShift; });
+    edges.forEach(e => {
+        e.from.x += xGlobalShift; e.from.y += yGlobalShift;
+        e.to.x += xGlobalShift; e.to.y += yGlobalShift;
+    });
+
+    return { nodes, edges, width: canvasWidth, height: canvasHeight };
 };
 
 const NODE_COLORS = [
@@ -186,10 +239,23 @@ function MindmapDetailScreenContent() {
     // Gestures
     const scale = useSharedValue(1);
     const savedScale = useSharedValue(1);
-    const translateX = useSharedValue(width / 4); // Center roughly
-    const translateY = useSharedValue(height / 3);
-    const savedTranslateX = useSharedValue(width / 4);
-    const savedTranslateY = useSharedValue(height / 3);
+    const translateX = useSharedValue(0);
+    const translateY = useSharedValue(0);
+    const savedTranslateX = useSharedValue(0);
+    const savedTranslateY = useSharedValue(0);
+
+    // Center view on root when data loads
+    useEffect(() => {
+        if (nodes.length > 0) {
+            const rootNode = nodes.find(n => n.depth === 0);
+            if (rootNode) {
+                translateX.value = width / 2 - rootNode.x;
+                translateY.value = height / 2 - rootNode.y;
+                savedTranslateX.value = translateX.value;
+                savedTranslateY.value = translateY.value;
+            }
+        }
+    }, [nodes, width, height]);
 
     const panGesture = Gesture.Pan()
         .onUpdate((e) => {
@@ -223,36 +289,80 @@ function MindmapDetailScreenContent() {
         return (
             <Svg width={dimensions.width} height={dimensions.height} style={styles.svgLayer}>
                 <Defs>
+                    {/* Dot Grid */}
                     <Pattern
                         id="dots"
                         x="0"
                         y="0"
-                        width="30"
-                        height="30"
+                        width="40"
+                        height="40"
                         patternUnits="userSpaceOnUse"
                     >
                         <Circle
                             cx="2"
                             cy="2"
-                            r="1.5"
+                            r="1.2"
                             fill={colors.text}
-                            fillOpacity={0.1}
+                            fillOpacity={0.08}
+                        />
+                    </Pattern>
+
+                    {/* Graph Paper Lines */}
+                    <Pattern
+                        id="grid"
+                        x="0"
+                        y="0"
+                        width="200"
+                        height="200"
+                        patternUnits="userSpaceOnUse"
+                    >
+                        <Path
+                            d="M 200 0 L 0 0 0 200"
+                            fill="none"
+                            stroke={colors.text}
+                            strokeWidth="1"
+                            strokeOpacity="0.05"
                         />
                     </Pattern>
                 </Defs>
 
-                {/* Background Pattern */}
+                {/* Background Layer */}
+                <Rect width="100%" height="100%" fill={colors.background} />
+                <Rect width="100%" height="100%" fill="url(#grid)" />
                 <Rect width="100%" height="100%" fill="url(#dots)" />
 
                 {edges.map((edge, i) => {
-                    const d = `M${edge.from.x},${edge.from.y} C${edge.from.x + 60},${edge.from.y} ${edge.to.x - 60},${edge.to.y} ${edge.to.x},${edge.to.y}`;
+                    const { from, to } = edge;
+
+                    let d;
+
+                    if (LAYOUT_TYPE === 'radial') {
+                        // Simple straight edges for radial (more Obsidan-like) 
+                        // or very subtle curves.
+                        d = `M${from.x},${from.y} L${to.x},${to.y}`;
+                    } else {
+                        // Determine horizontal anchor points based on side
+                        // Root (side 0) spreads to both
+                        const fromX = from.depth === 0 ? from.x + (to.side * (NODE_WIDTH / 2)) : from.x + (from.side * (NODE_WIDTH / 2));
+                        const toX = to.x - (to.side * (NODE_WIDTH / 2));
+
+                        const fromY = from.y;
+                        const toY = to.y;
+
+                        // Control points for smooth S-curves
+                        const cp1X = fromX + (to.side * LEVEL_GAP / 2);
+                        const cp2X = toX - (to.side * LEVEL_GAP / 2);
+
+                        d = `M${fromX},${fromY} C${cp1X},${fromY} ${cp2X},${toY} ${toX},${toY}`;
+                    }
+
                     return (
                         <Path
                             key={i}
                             d={d}
                             stroke={colors.text}
                             strokeOpacity={0.2}
-                            strokeWidth={2}
+                            strokeWidth={4} // Thicker, more cartoonish lines
                             fill="none"
                             strokeLinecap="round"
                         />
@@ -321,29 +431,49 @@ function MindmapDetailScreenContent() {
                                     style={[
                                         styles.node,
                                         {
-                                            left: node.x,
-                                            top: node.y - (isRoot ? 50 : 40), // Adjusted for taller nodes
-                                            width: isRoot ? 180 : 150,
+                                            left: node.x - (isRoot ? 100 : 85),
+                                            top: node.y - (isRoot ? 50 : 40),
+                                            width: isRoot ? 200 : 170,
                                             height: isRoot ? 100 : 80,
                                             backgroundColor: isRoot ? nodeColor : colors.card,
                                             borderColor: colors.border,
-                                            borderWidth: 3,
-                                            borderLeftWidth: isRoot ? 3 : 8,
-                                            borderLeftColor: isRoot ? colors.border : nodeColor,
+                                            borderWidth: 4, // Thicker border
+                                            // Playful irregular border radius
+                                            borderTopLeftRadius: isRoot ? 25 : 15,
+                                            borderTopRightRadius: isRoot ? 40 : 25,
+                                            borderBottomLeftRadius: isRoot ? 15 : 30,
+                                            borderBottomRightRadius: isRoot ? 35 : 20,
+                                            // Side indicator
+                                            borderLeftWidth: (isRoot || node.side === 1) ? 4 : 10,
+                                            borderRightWidth: (node.side === -1) ? 10 : 4,
+                                            borderLeftColor: (node.side === -1 && !isRoot) ? colors.border : nodeColor,
+                                            borderRightColor: (node.side === 1 && !isRoot) ? nodeColor : colors.border,
                                             zIndex: 10 + node.depth,
-                                            shadowColor: colors.border,
+                                            shadowColor: colors.text, // Bold black shadow
+                                            shadowOffset: { width: 6, height: 6 },
+                                            shadowOpacity: 1,
+                                            shadowRadius: 0,
+                                            elevation: 8,
                                         }
                                     ]}
                                 >
-                                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                                    {/* Paperclip decoration for root */}
+                                    {isRoot && (
+                                        <View style={[styles.paperclip, { backgroundColor: colors.secondary, borderColor: colors.border }]} />
+                                    )}
+
+                                    <View style={{ flex: 1, justifyContent: 'center', width: '100%' }}>
                                         <Text
                                             style={[
                                                 styles.nodeText,
                                                 {
                                                     color: isRoot ? '#FFF' : colors.text,
-                                                    fontSize: isRoot ? 15 : 12,
+                                                    fontSize: isRoot ? 16 : 13, // Slightly larger text
                                                     fontWeight: '900',
-                                                    marginBottom: node.note ? 4 : 0
+                                                    marginBottom: node.note ? 4 : 0,
+                                                    textShadowColor: isRoot ? 'rgba(0,0,0,0.3)' : 'transparent',
+                                                    textShadowOffset: { width: 1, height: 1 },
+                                                    textShadowRadius: 1,
                                                 }
                                             ]}
                                             numberOfLines={2}
@@ -353,9 +483,9 @@ function MindmapDetailScreenContent() {
                                         {node.note && (
                                             <Text
                                                 style={{
-                                                    color: isRoot ? 'rgba(255,255,255,0.8)' : colors.textSecondary,
+                                                    color: isRoot ? 'rgba(255,255,255,0.9)' : colors.textSecondary,
                                                     fontSize: 10,
-                                                    fontWeight: '600',
+                                                    fontWeight: '700',
                                                     lineHeight: 12,
                                                     textAlign: 'center'
                                                 }}
@@ -442,11 +572,25 @@ const styles = StyleSheet.create({
     },
     node: {
         position: 'absolute',
-        borderRadius: 12,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 8,
-        ...Shadows.pop,
+        padding: 10,
+        // Neo-Brutalist Shadow (Native)
+        shadowColor: '#000',
+        shadowOffset: { width: 8, height: 8 },
+        shadowOpacity: 1,
+        shadowRadius: 0,
+    },
+    paperclip: {
+        position: 'absolute',
+        top: -15,
+        right: 20,
+        width: 12,
+        height: 40,
+        borderRadius: 6,
+        borderWidth: 3,
+        zIndex: 50,
+        transform: [{ rotate: '15deg' }],
     },
     nodeText: {
         textAlign: 'center',
