@@ -14,10 +14,9 @@ const AddMindmapModal = ({ visible, onClose, onSave, colors }) => {
     const [topic, setTopic] = useState('');
     const [description, setDescription] = useState('');
     const [jsonText, setJsonText] = useState('');
-
     const handleCopyPrompt = async () => {
         const selectedTopic = topic.trim() || '[YOUR_TOPIC]';
-        const AI_PROMPT = `Create a hierarchical mindmap about "${selectedTopic}". 
+        const AI_PROMPT = `Create a detailed hierarchical mindmap about "${selectedTopic}". 
         
 Description/Context: ${description || 'General overview'}
 
@@ -25,10 +24,12 @@ Return ONLY a valid JSON object representing the root node. The structure must b
 {
   "id": "root",
   "label": "${selectedTopic}",
+  "note": "A concise core definition or overview of the topic.",
   "children": [
     {
       "id": "unique_string_id_1",
       "label": "Subtopic Label",
+      "note": "A clear, 1-sentence definition or key fact about this subtopic.",
       "children": [ ... ] 
     },
     ...
@@ -38,14 +39,28 @@ Return ONLY a valid JSON object representing the root node. The structure must b
 - Ensure roughly 3-5 main branches.
 - Each branch should have 2-4 sub-branches.
 - Keep labels concise (1-5 words).
+- Every node MUST include a "note" field with a helpful 1-sentence definition or explanation.
 - Do not include any markdown formatting (like \`\`\`json), just the raw JSON.`;
 
         await Clipboard.setStringAsync(AI_PROMPT);
         Alert.alert("Copied!", "Prompt copied! Now open ChatGPT and paste it.");
     };
 
-    const handleOpenChatGPT = () => {
-        Linking.openURL('https://chat.openai.com');
+    const handleOpenChatGPT = async () => {
+        const appUrl = 'chatgpt://';
+        const webUrl = 'https://chat.openai.com';
+
+        try {
+            const canOpen = await Linking.canOpenURL(appUrl);
+            if (canOpen) {
+                await Linking.openURL(appUrl);
+            } else {
+                await Linking.openURL(webUrl);
+            }
+        } catch (e) {
+            console.error("ChatGPT Deep Link failed, falling back to web:", e);
+            await Linking.openURL(webUrl);
+        }
     };
 
     const handleSave = () => {
@@ -199,6 +214,7 @@ Return ONLY a valid JSON object representing the root node. The structure must b
         </Modal>
     );
 };
+
 
 const styles = StyleSheet.create({
     overlay: {

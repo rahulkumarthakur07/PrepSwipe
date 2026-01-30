@@ -53,7 +53,15 @@ const MindmapCard = ({ item, colors, onPress, onDelete }) => (
 
         <View style={styles.cardFooter}>
             <Text style={[styles.dateText, { color: colors.textSecondary }]}>
-                {new Date(item.createdAt).toLocaleDateString()}
+                {(() => {
+                    try {
+                        const date = new Date(item.createdAt);
+                        return isNaN(date.getTime()) ? 'Unknown Date' : date.toLocaleDateString();
+                    } catch (e) {
+                        console.error("Date parsing error:", e);
+                        return 'Unknown Date';
+                    }
+                })()}
             </Text>
         </View>
     </TouchableOpacity>
@@ -103,17 +111,20 @@ export default function MindmapScreen() {
             </View>
 
             <FlatList
-                data={mindmaps}
-                keyExtractor={(item) => item.id}
+                data={Array.isArray(mindmaps) ? mindmaps : []}
+                keyExtractor={(item) => (item && item.id) ? item.id.toString() : Math.random().toString()}
                 contentContainerStyle={styles.listContent}
-                renderItem={({ item }) => (
-                    <MindmapCard
-                        item={item}
-                        colors={colors}
-                        onPress={() => handleOpenMap(item.id)}
-                        onDelete={() => handleDelete(item.id)}
-                    />
-                )}
+                renderItem={({ item }) => {
+                    if (!item || !item.id) return null;
+                    return (
+                        <MindmapCard
+                            item={item}
+                            colors={colors}
+                            onPress={() => handleOpenMap(item.id)}
+                            onDelete={() => handleDelete(item.id)}
+                        />
+                    );
+                }}
                 ListEmptyComponent={
                     <View style={styles.emptyState}>
                         <Text style={[styles.emptyText, { color: colors.textSecondary }]}>

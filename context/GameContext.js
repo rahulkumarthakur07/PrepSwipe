@@ -133,10 +133,16 @@ export const GameProvider = ({ children }) => {
             const savedUserQuestions = await AsyncStorage.getItem('prepSwipe_userQuestions');
 
             if (savedCategory) setCurrentCategory(savedCategory);
-            if (savedUserQuestions) setUserQuestions(JSON.parse(savedUserQuestions));
+            if (savedUserQuestions) {
+                const parsed = JSON.parse(savedUserQuestions);
+                setUserQuestions(Array.isArray(parsed) ? parsed : []);
+            }
 
             const savedMindmaps = await AsyncStorage.getItem('prepSwipe_mindmaps');
-            if (savedMindmaps) setMindmaps(JSON.parse(savedMindmaps));
+            if (savedMindmaps) {
+                const parsed = JSON.parse(savedMindmaps);
+                setMindmaps(Array.isArray(parsed) ? parsed : []);
+            }
         } catch (e) {
             console.error("Failed to load state", e);
         } finally {

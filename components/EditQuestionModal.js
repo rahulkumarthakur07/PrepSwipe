@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, StyleSheet, Pressable, TextInput, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { Save, Trash2, X } from 'lucide-react-native';
+import { useEffect, useState } from 'react';
+import { Alert, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Spacing, BorderRadius, Shadows, Border } from '../constants/theme';
-import { X, Save, Trash2, Pin } from 'lucide-react-native';
+import { Shadows, Spacing } from '../constants/theme';
 import { useGame } from '../context/GameContext';
 
 const Decoration = ({ style, colors }) => (
