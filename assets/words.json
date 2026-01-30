@@ -1,0 +1,1802 @@
+[
+    {
+        "index": 1,
+        "word": "Apple",
+        "level": "Easy",
+        "meaning": "A sweet or sour fruit that grows on trees."
+    },
+    {
+        "index": 2,
+        "word": "Ball",
+        "level": "Easy",
+        "meaning": "A round object used in many games."
+    },
+    {
+        "index": 3,
+        "word": "Cat",
+        "level": "Easy",
+        "meaning": "A small pet animal that likes to sleep and purr."
+    },
+    {
+        "index": 4,
+        "word": "Dog",
+        "level": "Easy",
+        "meaning": "A loyal animal often kept as a pet."
+    },
+    {
+        "index": 5,
+        "word": "Egg",
+        "level": "Easy",
+        "meaning": "Food produced by birds, often eaten for breakfast."
+    },
+    {
+        "index": 6,
+        "word": "Fish",
+        "level": "Easy",
+        "meaning": "An animal that lives and swims in water."
+    },
+    {
+        "index": 7,
+        "word": "Garden",
+        "level": "Easy",
+        "meaning": "A place where plants and flowers are grown."
+    },
+    {
+        "index": 8,
+        "word": "House",
+        "level": "Easy",
+        "meaning": "A building where people live."
+    },
+    {
+        "index": 9,
+        "word": "Ice",
+        "level": "Easy",
+        "meaning": "Frozen water."
+    },
+    {
+        "index": 10,
+        "word": "Juice",
+        "level": "Easy",
+        "meaning": "A drink made from fruits."
+    },
+    {
+        "index": 11,
+        "word": "Kite",
+        "level": "Easy",
+        "meaning": "A light object flown in the sky using string."
+    },
+    {
+        "index": 12,
+        "word": "Leaf",
+        "level": "Easy",
+        "meaning": "The green part of a plant."
+    },
+    {
+        "index": 13,
+        "word": "Moon",
+        "level": "Easy",
+        "meaning": "The natural object that shines at night."
+    },
+    {
+        "index": 14,
+        "word": "Nest",
+        "level": "Easy",
+        "meaning": "A home made by birds."
+    },
+    {
+        "index": 15,
+        "word": "Orange",
+        "level": "Easy",
+        "meaning": "A juicy fruit and also a color."
+    },
+    {
+        "index": 16,
+        "word": "Pencil",
+        "level": "Easy",
+        "meaning": "A tool used for writing or drawing."
+    },
+    {
+        "index": 17,
+        "word": "Queen",
+        "level": "Easy",
+        "meaning": "A female ruler or royal leader."
+    },
+    {
+        "index": 18,
+        "word": "River",
+        "level": "Easy",
+        "meaning": "A long stream of flowing water."
+    },
+    {
+        "index": 19,
+        "word": "Sun",
+        "level": "Easy",
+        "meaning": "The star that gives us light and heat."
+    },
+    {
+        "index": 20,
+        "word": "Tree",
+        "level": "Easy",
+        "meaning": "A tall plant with a trunk and branches."
+    },
+    {
+        "index": 21,
+        "word": "Umbrella",
+        "level": "Medium",
+        "meaning": "An object used to protect from rain or sun."
+    },
+    {
+        "index": 22,
+        "word": "Village",
+        "level": "Medium",
+        "meaning": "A small area where people live, smaller than a town."
+    },
+    {
+        "index": 23,
+        "word": "Window",
+        "level": "Medium",
+        "meaning": "An opening in a wall that lets in light and air."
+    },
+    {
+        "index": 24,
+        "word": "Xylophone",
+        "level": "Medium",
+        "meaning": "A musical instrument made of wooden bars."
+    },
+    {
+        "index": 25,
+        "word": "Yogurt",
+        "level": "Medium",
+        "meaning": "A thick dairy food made from milk."
+    },
+    {
+        "index": 26,
+        "word": "Zebra",
+        "level": "Medium",
+        "meaning": "An animal with black and white stripes."
+    },
+    {
+        "index": 27,
+        "word": "Bridge",
+        "level": "Medium",
+        "meaning": "A structure built over water or roads."
+    },
+    {
+        "index": 28,
+        "word": "Camera",
+        "level": "Medium",
+        "meaning": "A device used to take photos."
+    },
+    {
+        "index": 29,
+        "word": "Desert",
+        "level": "Medium",
+        "meaning": "A dry place with very little rain."
+    },
+    {
+        "index": 30,
+        "word": "Engine",
+        "level": "Medium",
+        "meaning": "A machine that makes vehicles move."
+    },
+    {
+        "index": 31,
+        "word": "Forest",
+        "level": "Medium",
+        "meaning": "A large area full of trees."
+    },
+    {
+        "index": 32,
+        "word": "Galaxy",
+        "level": "Medium",
+        "meaning": "A huge group of stars in space."
+    },
+    {
+        "index": 33,
+        "word": "Helmet",
+        "level": "Medium",
+        "meaning": "Protective headgear worn for safety."
+    },
+    {
+        "index": 34,
+        "word": "Island",
+        "level": "Medium",
+        "meaning": "Land surrounded by water on all sides."
+    },
+    {
+        "index": 35,
+        "word": "Jungle",
+        "level": "Medium",
+        "meaning": "A dense forest with many animals."
+    },
+    {
+        "index": 36,
+        "word": "Kitchen",
+        "level": "Medium",
+        "meaning": "A room where food is cooked."
+    },
+    {
+        "index": 37,
+        "word": "Library",
+        "level": "Medium",
+        "meaning": "A place full of books for reading."
+    },
+    {
+        "index": 38,
+        "word": "Mountain",
+        "level": "Medium",
+        "meaning": "A very high natural landform."
+    },
+    {
+        "index": 39,
+        "word": "Notebook",
+        "level": "Medium",
+        "meaning": "A book used for writing notes."
+    },
+    {
+        "index": 40,
+        "word": "Ocean",
+        "level": "Medium",
+        "meaning": "A very large body of salt water."
+    },
+    {
+        "index": 41,
+        "word": "Painter",
+        "level": "Medium",
+        "meaning": "A person who creates art using paint."
+    },
+    {
+        "index": 42,
+        "word": "Rocket",
+        "level": "Medium",
+        "meaning": "A vehicle used to travel into space."
+    },
+    {
+        "index": 43,
+        "word": "Shadow",
+        "level": "Medium",
+        "meaning": "A dark shape made when light is blocked."
+    },
+    {
+        "index": 44,
+        "word": "Temple",
+        "level": "Medium",
+        "meaning": "A place used for worship."
+    },
+    {
+        "index": 45,
+        "word": "Uniform",
+        "level": "Medium",
+        "meaning": "Special clothes worn for work or school."
+    },
+    {
+        "index": 46,
+        "word": "Volcano",
+        "level": "Medium",
+        "meaning": "A mountain that can erupt with lava."
+    },
+    {
+        "index": 47,
+        "word": "Waterfall",
+        "level": "Medium",
+        "meaning": "Water falling from a high place."
+    },
+    {
+        "index": 48,
+        "word": "Backpack",
+        "level": "Medium",
+        "meaning": "A bag carried on the back."
+    },
+    {
+        "index": 49,
+        "word": "Compass",
+        "level": "Medium",
+        "meaning": "A tool used to find direction."
+    },
+    {
+        "index": 50,
+        "word": "Drum",
+        "level": "Medium",
+        "meaning": "A musical instrument beaten with hands or sticks."
+    },
+    {
+        "index": 51,
+        "word": "Adventure",
+        "level": "Hard",
+        "meaning": "An exciting and unusual experience."
+    },
+    {
+        "index": 52,
+        "word": "Balance",
+        "level": "Hard",
+        "meaning": "The ability to stay steady."
+    },
+    {
+        "index": 53,
+        "word": "Courage",
+        "level": "Hard",
+        "meaning": "The strength to face fear."
+    },
+    {
+        "index": 54,
+        "word": "Discover",
+        "level": "Hard",
+        "meaning": "To find something new."
+    },
+    {
+        "index": 55,
+        "word": "Explore",
+        "level": "Hard",
+        "meaning": "To travel to learn about new places."
+    },
+    {
+        "index": 56,
+        "word": "Freedom",
+        "level": "Hard",
+        "meaning": "The power to act or speak freely."
+    },
+    {
+        "index": 57,
+        "word": "Gravity",
+        "level": "Hard",
+        "meaning": "The force that pulls things toward Earth."
+    },
+    {
+        "index": 58,
+        "word": "History",
+        "level": "Hard",
+        "meaning": "Study of past events."
+    },
+    {
+        "index": 59,
+        "word": "Imagine",
+        "level": "Hard",
+        "meaning": "To form ideas in the mind."
+    },
+    {
+        "index": 60,
+        "word": "Journey",
+        "level": "Hard",
+        "meaning": "Travel from one place to another."
+    },
+    {
+        "index": 61,
+        "word": "Knowledge",
+        "level": "Hard",
+        "meaning": "Information gained through learning."
+    },
+    {
+        "index": 62,
+        "word": "Language",
+        "level": "Hard",
+        "meaning": "A system of communication."
+    },
+    {
+        "index": 63,
+        "word": "Memory",
+        "level": "Hard",
+        "meaning": "The ability to remember things."
+    },
+    {
+        "index": 64,
+        "word": "Nature",
+        "level": "Hard",
+        "meaning": "The physical world and living things."
+    },
+    {
+        "index": 65,
+        "word": "Observe",
+        "level": "Hard",
+        "meaning": "To watch carefully."
+    },
+    {
+        "index": 66,
+        "word": "Patience",
+        "level": "Hard",
+        "meaning": "The ability to wait calmly."
+    },
+    {
+        "index": 67,
+        "word": "Quality",
+        "level": "Hard",
+        "meaning": "How good or bad something is."
+    },
+    {
+        "index": 68,
+        "word": "Respect",
+        "level": "Hard",
+        "meaning": "To treat others with care and honor."
+    },
+    {
+        "index": 69,
+        "word": "Success",
+        "level": "Hard",
+        "meaning": "Achieving a goal."
+    },
+    {
+        "index": 70,
+        "word": "Treasure",
+        "level": "Hard",
+        "meaning": "Something valuable or precious."
+    },
+    {
+        "index": 71,
+        "word": "Universe",
+        "level": "Hard",
+        "meaning": "Everything that exists in space."
+    },
+    {
+        "index": 72,
+        "word": "Victory",
+        "level": "Hard",
+        "meaning": "Winning a game or battle."
+    },
+    {
+        "index": 73,
+        "word": "Wisdom",
+        "level": "Hard",
+        "meaning": "Good judgment gained from experience."
+    },
+    {
+        "index": 74,
+        "word": "Xenial",
+        "level": "Hard",
+        "meaning": "Friendly to guests or strangers."
+    },
+    {
+        "index": 75,
+        "word": "Youth",
+        "level": "Hard",
+        "meaning": "The time of being young."
+    },
+    {
+        "index": 76,
+        "word": "Zealous",
+        "level": "Hard",
+        "meaning": "Showing great energy or passion."
+    },
+    {
+        "index": 77,
+        "word": "Artist",
+        "level": "Medium",
+        "meaning": "A person who creates art."
+    },
+    {
+        "index": 78,
+        "word": "Builder",
+        "level": "Medium",
+        "meaning": "Someone who constructs buildings."
+    },
+    {
+        "index": 79,
+        "word": "Climber",
+        "level": "Medium",
+        "meaning": "A person who climbs mountains or walls."
+    },
+    {
+        "index": 80,
+        "word": "Driver",
+        "level": "Medium",
+        "meaning": "A person who drives a vehicle."
+    },
+    {
+        "index": 81,
+        "word": "Explorer",
+        "level": "Medium",
+        "meaning": "Someone who travels to new places."
+    },
+    {
+        "index": 82,
+        "word": "Farmer",
+        "level": "Medium",
+        "meaning": "A person who grows crops or raises animals."
+    },
+    {
+        "index": 83,
+        "word": "Gardener",
+        "level": "Medium",
+        "meaning": "A person who takes care of plants."
+    },
+    {
+        "index": 84,
+        "word": "Helper",
+        "level": "Medium",
+        "meaning": "Someone who helps others."
+    },
+    {
+        "index": 85,
+        "word": "Inventor",
+        "level": "Medium",
+        "meaning": "A person who creates new things."
+    },
+    {
+        "index": 86,
+        "word": "Leader",
+        "level": "Medium",
+        "meaning": "A person who guides others."
+    },
+    {
+        "index": 87,
+        "word": "Musician",
+        "level": "Medium",
+        "meaning": "A person who plays or creates music."
+    },
+    {
+        "index": 88,
+        "word": "Nurse",
+        "level": "Medium",
+        "meaning": "A person who cares for the sick."
+    },
+    {
+        "index": 89,
+        "word": "Officer",
+        "level": "Medium",
+        "meaning": "A person who keeps law and order."
+    },
+    {
+        "index": 90,
+        "word": "Pilot",
+        "level": "Medium",
+        "meaning": "A person who flies an aircraft."
+    },
+    {
+        "index": 91,
+        "word": "Reader",
+        "level": "Easy",
+        "meaning": "A person who reads books."
+    },
+    {
+        "index": 92,
+        "word": "Singer",
+        "level": "Easy",
+        "meaning": "A person who sings songs."
+    },
+    {
+        "index": 93,
+        "word": "Teacher",
+        "level": "Easy",
+        "meaning": "A person who helps others learn."
+    },
+    {
+        "index": 94,
+        "word": "Writer",
+        "level": "Easy",
+        "meaning": "A person who writes stories or books."
+    },
+    {
+        "index": 95,
+        "word": "Student",
+        "level": "Easy",
+        "meaning": "A person who studies or learns."
+    },
+    {
+        "index": 96,
+        "word": "Friendship",
+        "level": "Hard",
+        "meaning": "A close relationship between friends."
+    },
+    {
+        "index": 97,
+        "word": "Happiness",
+        "level": "Hard",
+        "meaning": "A feeling of joy and contentment."
+    },
+    {
+        "index": 98,
+        "word": "Kindness",
+        "level": "Hard",
+        "meaning": "Being friendly and caring."
+    },
+    {
+        "index": 99,
+        "word": "Responsibility",
+        "level": "Hard",
+        "meaning": "A duty that must be taken care of."
+    },
+    {
+        "index": 100,
+        "word": "Confidence",
+        "level": "Hard",
+        "meaning": "Belief in oneself and abilities."
+    },
+    {
+        "index": 101,
+        "word": "Ability",
+        "level": "Easy",
+        "meaning": "The power to do something."
+    },
+    {
+        "index": 102,
+        "word": "Air",
+        "level": "Easy",
+        "meaning": "The invisible gas we breathe."
+    },
+    {
+        "index": 103,
+        "word": "Animal",
+        "level": "Easy",
+        "meaning": "A living creature that moves and eats."
+    },
+    {
+        "index": 104,
+        "word": "Answer",
+        "level": "Easy",
+        "meaning": "A reply to a question."
+    },
+    {
+        "index": 105,
+        "word": "Beach",
+        "level": "Easy",
+        "meaning": "A sandy place near the sea."
+    },
+    {
+        "index": 106,
+        "word": "Bottle",
+        "level": "Easy",
+        "meaning": "A container used to hold liquids."
+    },
+    {
+        "index": 107,
+        "word": "Bread",
+        "level": "Easy",
+        "meaning": "Food made from flour and baked."
+    },
+    {
+        "index": 108,
+        "word": "Chair",
+        "level": "Easy",
+        "meaning": "Furniture used for sitting."
+    },
+    {
+        "index": 109,
+        "word": "Cloud",
+        "level": "Easy",
+        "meaning": "A white or gray shape in the sky."
+    },
+    {
+        "index": 110,
+        "word": "Color",
+        "level": "Easy",
+        "meaning": "The appearance of objects like red or blue."
+    },
+    {
+        "index": 111,
+        "word": "Dance",
+        "level": "Easy",
+        "meaning": "Moving the body to music."
+    },
+    {
+        "index": 112,
+        "word": "Door",
+        "level": "Easy",
+        "meaning": "An entrance to a room or building."
+    },
+    {
+        "index": 113,
+        "word": "Earth",
+        "level": "Easy",
+        "meaning": "The planet we live on."
+    },
+    {
+        "index": 114,
+        "word": "Family",
+        "level": "Easy",
+        "meaning": "People related to each other."
+    },
+    {
+        "index": 115,
+        "word": "Fire",
+        "level": "Easy",
+        "meaning": "Heat and light from burning."
+    },
+    {
+        "index": 116,
+        "word": "Flower",
+        "level": "Easy",
+        "meaning": "The colorful part of a plant."
+    },
+    {
+        "index": 117,
+        "word": "Food",
+        "level": "Easy",
+        "meaning": "What people and animals eat."
+    },
+    {
+        "index": 118,
+        "word": "Game",
+        "level": "Easy",
+        "meaning": "An activity played for fun."
+    },
+    {
+        "index": 119,
+        "word": "Glass",
+        "level": "Easy",
+        "meaning": "A hard, clear material or a drinking cup."
+    },
+    {
+        "index": 120,
+        "word": "Grass",
+        "level": "Easy",
+        "meaning": "Green plants covering the ground."
+    },
+    {
+        "index": 121,
+        "word": "Hand",
+        "level": "Easy",
+        "meaning": "The part of the body used to hold things."
+    },
+    {
+        "index": 122,
+        "word": "Hat",
+        "level": "Easy",
+        "meaning": "Clothing worn on the head."
+    },
+    {
+        "index": 123,
+        "word": "Hill",
+        "level": "Easy",
+        "meaning": "A small raised area of land."
+    },
+    {
+        "index": 124,
+        "word": "Horse",
+        "level": "Easy",
+        "meaning": "A strong animal used for riding."
+    },
+    {
+        "index": 125,
+        "word": "Idea",
+        "level": "Easy",
+        "meaning": "A thought or plan."
+    },
+    {
+        "index": 126,
+        "word": "Job",
+        "level": "Easy",
+        "meaning": "Work done to earn money."
+    },
+    {
+        "index": 127,
+        "word": "Key",
+        "level": "Easy",
+        "meaning": "A tool used to open locks."
+    },
+    {
+        "index": 128,
+        "word": "Lake",
+        "level": "Easy",
+        "meaning": "A large body of water surrounded by land."
+    },
+    {
+        "index": 129,
+        "word": "Light",
+        "level": "Easy",
+        "meaning": "Brightness that helps us see."
+    },
+    {
+        "index": 130,
+        "word": "Milk",
+        "level": "Easy",
+        "meaning": "A white drink from animals like cows."
+    },
+    {
+        "index": 131,
+        "word": "Money",
+        "level": "Easy",
+        "meaning": "Used to buy things."
+    },
+    {
+        "index": 132,
+        "word": "Music",
+        "level": "Easy",
+        "meaning": "Sounds that are pleasant to hear."
+    },
+    {
+        "index": 133,
+        "word": "Night",
+        "level": "Easy",
+        "meaning": "The dark part of the day."
+    },
+    {
+        "index": 134,
+        "word": "Paper",
+        "level": "Easy",
+        "meaning": "Material used for writing or drawing."
+    },
+    {
+        "index": 135,
+        "word": "Party",
+        "level": "Easy",
+        "meaning": "A gathering for celebration."
+    },
+    {
+        "index": 136,
+        "word": "Plant",
+        "level": "Easy",
+        "meaning": "A living thing that grows in soil."
+    },
+    {
+        "index": 137,
+        "word": "Rain",
+        "level": "Easy",
+        "meaning": "Water falling from the sky."
+    },
+    {
+        "index": 138,
+        "word": "Road",
+        "level": "Easy",
+        "meaning": "A path for vehicles to travel."
+    },
+    {
+        "index": 139,
+        "word": "Rock",
+        "level": "Easy",
+        "meaning": "A hard natural material from the earth."
+    },
+    {
+        "index": 140,
+        "word": "School",
+        "level": "Easy",
+        "meaning": "A place where students learn."
+    },
+    {
+        "index": 141,
+        "word": "Seat",
+        "level": "Easy",
+        "meaning": "A place to sit."
+    },
+    {
+        "index": 142,
+        "word": "Ship",
+        "level": "Easy",
+        "meaning": "A large boat used on water."
+    },
+    {
+        "index": 143,
+        "word": "Shoes",
+        "level": "Easy",
+        "meaning": "Footwear worn on feet."
+    },
+    {
+        "index": 144,
+        "word": "Sky",
+        "level": "Easy",
+        "meaning": "The space above the earth."
+    },
+    {
+        "index": 145,
+        "word": "Smile",
+        "level": "Easy",
+        "meaning": "A happy expression on the face."
+    },
+    {
+        "index": 146,
+        "word": "Snow",
+        "level": "Easy",
+        "meaning": "Frozen white flakes falling from the sky."
+    },
+    {
+        "index": 147,
+        "word": "Sound",
+        "level": "Easy",
+        "meaning": "What we hear."
+    },
+    {
+        "index": 148,
+        "word": "Star",
+        "level": "Easy",
+        "meaning": "A bright object in the night sky."
+    },
+    {
+        "index": 149,
+        "word": "Street",
+        "level": "Easy",
+        "meaning": "A road in a town or city."
+    },
+    {
+        "index": 150,
+        "word": "Table",
+        "level": "Easy",
+        "meaning": "Furniture with a flat top."
+    },
+    {
+        "index": 151,
+        "word": "Time",
+        "level": "Easy",
+        "meaning": "What we measure in hours and minutes."
+    },
+    {
+        "index": 152,
+        "word": "Train",
+        "level": "Easy",
+        "meaning": "A vehicle that runs on tracks."
+    },
+    {
+        "index": 153,
+        "word": "Travel",
+        "level": "Medium",
+        "meaning": "To go from one place to another."
+    },
+    {
+        "index": 154,
+        "word": "Voice",
+        "level": "Medium",
+        "meaning": "Sound made when speaking."
+    },
+    {
+        "index": 155,
+        "word": "Weather",
+        "level": "Medium",
+        "meaning": "The condition of the air outside."
+    },
+    {
+        "index": 156,
+        "word": "Wind",
+        "level": "Easy",
+        "meaning": "Moving air."
+    },
+    {
+        "index": 157,
+        "word": "Work",
+        "level": "Easy",
+        "meaning": "Effort done to achieve something."
+    },
+    {
+        "index": 158,
+        "word": "Ability",
+        "level": "Medium",
+        "meaning": "Skill or talent to do something well."
+    },
+    {
+        "index": 159,
+        "word": "Balance",
+        "level": "Medium",
+        "meaning": "Keeping steady without falling."
+    },
+    {
+        "index": 160,
+        "word": "Careful",
+        "level": "Medium",
+        "meaning": "Taking steps to avoid danger."
+    },
+    {
+        "index": 161,
+        "word": "Danger",
+        "level": "Medium",
+        "meaning": "The possibility of harm."
+    },
+    {
+        "index": 162,
+        "word": "Energy",
+        "level": "Medium",
+        "meaning": "The power to do work."
+    },
+    {
+        "index": 163,
+        "word": "Exercise",
+        "level": "Medium",
+        "meaning": "Physical activity to stay healthy."
+    },
+    {
+        "index": 164,
+        "word": "Future",
+        "level": "Medium",
+        "meaning": "Time that has not yet happened."
+    },
+    {
+        "index": 165,
+        "word": "Goal",
+        "level": "Medium",
+        "meaning": "Something you want to achieve."
+    },
+    {
+        "index": 166,
+        "word": "Health",
+        "level": "Medium",
+        "meaning": "The condition of body and mind."
+    },
+    {
+        "index": 167,
+        "word": "Internet",
+        "level": "Medium",
+        "meaning": "A global network for information."
+    },
+    {
+        "index": 168,
+        "word": "Learning",
+        "level": "Medium",
+        "meaning": "Gaining knowledge or skills."
+    },
+    {
+        "index": 169,
+        "word": "Memory",
+        "level": "Medium",
+        "meaning": "The ability to remember."
+    },
+    {
+        "index": 170,
+        "word": "Nature",
+        "level": "Medium",
+        "meaning": "The world of plants and animals."
+    },
+    {
+        "index": 171,
+        "word": "Opinion",
+        "level": "Medium",
+        "meaning": "What someone thinks or believes."
+    },
+    {
+        "index": 172,
+        "word": "Problem",
+        "level": "Medium",
+        "meaning": "A difficult situation to solve."
+    },
+    {
+        "index": 173,
+        "word": "Question",
+        "level": "Medium",
+        "meaning": "A sentence asking for information."
+    },
+    {
+        "index": 174,
+        "word": "Reason",
+        "level": "Medium",
+        "meaning": "The cause of something."
+    },
+    {
+        "index": 175,
+        "word": "Safety",
+        "level": "Medium",
+        "meaning": "Being free from harm."
+    },
+    {
+        "index": 176,
+        "word": "Talent",
+        "level": "Medium",
+        "meaning": "A natural skill or ability."
+    },
+    {
+        "index": 177,
+        "word": "Team",
+        "level": "Medium",
+        "meaning": "A group working together."
+    },
+    {
+        "index": 178,
+        "word": "Trust",
+        "level": "Medium",
+        "meaning": "Belief that someone is honest."
+    },
+    {
+        "index": 179,
+        "word": "Victory",
+        "level": "Medium",
+        "meaning": "Winning something."
+    },
+    {
+        "index": 180,
+        "word": "Wisdom",
+        "level": "Medium",
+        "meaning": "Knowledge gained through experience."
+    },
+    {
+        "index": 181,
+        "word": "Adventure",
+        "level": "Hard",
+        "meaning": "An exciting and risky experience."
+    },
+    {
+        "index": 182,
+        "word": "Ambition",
+        "level": "Hard",
+        "meaning": "A strong desire to succeed."
+    },
+    {
+        "index": 183,
+        "word": "Bravery",
+        "level": "Hard",
+        "meaning": "Courage in facing fear."
+    },
+    {
+        "index": 184,
+        "word": "Challenge",
+        "level": "Hard",
+        "meaning": "Something difficult that tests ability."
+    },
+    {
+        "index": 185,
+        "word": "Confidence",
+        "level": "Hard",
+        "meaning": "Belief in yourself."
+    },
+    {
+        "index": 186,
+        "word": "Creativity",
+        "level": "Hard",
+        "meaning": "The ability to create new ideas."
+    },
+    {
+        "index": 187,
+        "word": "Discipline",
+        "level": "Hard",
+        "meaning": "Training to follow rules."
+    },
+    {
+        "index": 188,
+        "word": "Effort",
+        "level": "Hard",
+        "meaning": "Hard work put into something."
+    },
+    {
+        "index": 189,
+        "word": "Focus",
+        "level": "Hard",
+        "meaning": "Paying full attention."
+    },
+    {
+        "index": 190,
+        "word": "Freedom",
+        "level": "Hard",
+        "meaning": "The power to act independently."
+    },
+    {
+        "index": 191,
+        "word": "Growth",
+        "level": "Hard",
+        "meaning": "The process of developing."
+    },
+    {
+        "index": 192,
+        "word": "Honesty",
+        "level": "Hard",
+        "meaning": "Being truthful."
+    },
+    {
+        "index": 193,
+        "word": "Imagination",
+        "level": "Hard",
+        "meaning": "The ability to form ideas."
+    },
+    {
+        "index": 194,
+        "word": "Justice",
+        "level": "Hard",
+        "meaning": "Fair treatment for all."
+    },
+    {
+        "index": 195,
+        "word": "Knowledge",
+        "level": "Hard",
+        "meaning": "Understanding gained from learning."
+    },
+    {
+        "index": 196,
+        "word": "Leadership",
+        "level": "Hard",
+        "meaning": "The ability to guide others."
+    },
+    {
+        "index": 197,
+        "word": "Motivation",
+        "level": "Hard",
+        "meaning": "Reason to act or work."
+    },
+    {
+        "index": 198,
+        "word": "Opportunity",
+        "level": "Hard",
+        "meaning": "A chance to do something."
+    },
+    {
+        "index": 199,
+        "word": "Responsibility",
+        "level": "Hard",
+        "meaning": "A duty or task to take care of."
+    },
+    {
+        "index": 200,
+        "word": "Success",
+        "level": "Hard",
+        "meaning": "Achieving a goal."
+    },
+    {
+        "index": 201,
+        "word": "Patience",
+        "level": "Hard",
+        "meaning": "The ability to wait calmly."
+    },
+    {
+        "index": 202,
+        "word": "Respect",
+        "level": "Hard",
+        "meaning": "Showing care for others."
+    },
+    {
+        "index": 203,
+        "word": "Strength",
+        "level": "Hard",
+        "meaning": "Physical or mental power."
+    },
+    {
+        "index": 204,
+        "word": "Truth",
+        "level": "Hard",
+        "meaning": "What is real and correct."
+    },
+    {
+        "index": 205,
+        "word": "Unity",
+        "level": "Hard",
+        "meaning": "Being joined together."
+    },
+    {
+        "index": 206,
+        "word": "Value",
+        "level": "Hard",
+        "meaning": "Importance or worth."
+    },
+    {
+        "index": 207,
+        "word": "Vision",
+        "level": "Hard",
+        "meaning": "A clear idea of the future."
+    },
+    {
+        "index": 208,
+        "word": "Wisdom",
+        "level": "Hard",
+        "meaning": "Good judgment and experience."
+    },
+    {
+        "index": 209,
+        "word": "Zeal",
+        "level": "Hard",
+        "meaning": "Great energy or enthusiasm."
+    },
+    {
+        "index": 210,
+        "word": "Achievement",
+        "level": "Hard",
+        "meaning": "Something done successfully."
+    },
+    {
+        "index": 211,
+        "word": "Adapt",
+        "level": "Medium",
+        "meaning": "To change to fit new conditions."
+    },
+    {
+        "index": 212,
+        "word": "Admire",
+        "level": "Medium",
+        "meaning": "To respect or like something greatly."
+    },
+    {
+        "index": 213,
+        "word": "Advice",
+        "level": "Medium",
+        "meaning": "Suggestions to help someone decide."
+    },
+    {
+        "index": 214,
+        "word": "Ancient",
+        "level": "Medium",
+        "meaning": "Very old from long ago."
+    },
+    {
+        "index": 215,
+        "word": "Anxiety",
+        "level": "Hard",
+        "meaning": "A feeling of worry or nervousness."
+    },
+    {
+        "index": 216,
+        "word": "Approve",
+        "level": "Medium",
+        "meaning": "To agree or accept officially."
+    },
+    {
+        "index": 217,
+        "word": "Arrange",
+        "level": "Medium",
+        "meaning": "To put things in order."
+    },
+    {
+        "index": 218,
+        "word": "Attempt",
+        "level": "Medium",
+        "meaning": "To try to do something."
+    },
+    {
+        "index": 219,
+        "word": "Aware",
+        "level": "Medium",
+        "meaning": "Knowing or realizing something."
+    },
+    {
+        "index": 220,
+        "word": "Balance",
+        "level": "Medium",
+        "meaning": "A state of equal or steady position."
+    },
+    {
+        "index": 221,
+        "word": "Behavior",
+        "level": "Medium",
+        "meaning": "The way someone acts."
+    },
+    {
+        "index": 222,
+        "word": "Benefit",
+        "level": "Medium",
+        "meaning": "An advantage or good result."
+    },
+    {
+        "index": 223,
+        "word": "Brilliant",
+        "level": "Medium",
+        "meaning": "Very smart or very bright."
+    },
+    {
+        "index": 224,
+        "word": "Calculate",
+        "level": "Hard",
+        "meaning": "To find an answer using numbers."
+    },
+    {
+        "index": 225,
+        "word": "Calm",
+        "level": "Easy",
+        "meaning": "Peaceful and not excited."
+    },
+    {
+        "index": 226,
+        "word": "Capability",
+        "level": "Hard",
+        "meaning": "The ability to do something."
+    },
+    {
+        "index": 227,
+        "word": "Career",
+        "level": "Medium",
+        "meaning": "A long-term job or profession."
+    },
+    {
+        "index": 228,
+        "word": "Celebrate",
+        "level": "Medium",
+        "meaning": "To enjoy a special event."
+    },
+    {
+        "index": 229,
+        "word": "Change",
+        "level": "Easy",
+        "meaning": "To make something different."
+    },
+    {
+        "index": 230,
+        "word": "Choice",
+        "level": "Easy",
+        "meaning": "An option selected from many."
+    },
+    {
+        "index": 231,
+        "word": "Comfort",
+        "level": "Medium",
+        "meaning": "A feeling of ease and relief."
+    },
+    {
+        "index": 232,
+        "word": "Communicate",
+        "level": "Hard",
+        "meaning": "To share information or ideas."
+    },
+    {
+        "index": 233,
+        "word": "Compare",
+        "level": "Medium",
+        "meaning": "To find similarities or differences."
+    },
+    {
+        "index": 234,
+        "word": "Compete",
+        "level": "Medium",
+        "meaning": "To try to win against others."
+    },
+    {
+        "index": 235,
+        "word": "Concentrate",
+        "level": "Hard",
+        "meaning": "To focus attention fully."
+    },
+    {
+        "index": 236,
+        "word": "Concern",
+        "level": "Medium",
+        "meaning": "Something that causes worry."
+    },
+    {
+        "index": 237,
+        "word": "Confirm",
+        "level": "Medium",
+        "meaning": "To make sure something is true."
+    },
+    {
+        "index": 238,
+        "word": "Conflict",
+        "level": "Hard",
+        "meaning": "A serious disagreement."
+    },
+    {
+        "index": 239,
+        "word": "Confuse",
+        "level": "Medium",
+        "meaning": "To make someone unsure."
+    },
+    {
+        "index": 240,
+        "word": "Connect",
+        "level": "Medium",
+        "meaning": "To join things together."
+    },
+    {
+        "index": 241,
+        "word": "Consequence",
+        "level": "Hard",
+        "meaning": "The result of an action."
+    },
+    {
+        "index": 242,
+        "word": "Consider",
+        "level": "Medium",
+        "meaning": "To think about carefully."
+    },
+    {
+        "index": 243,
+        "word": "Control",
+        "level": "Medium",
+        "meaning": "Power to manage or direct."
+    },
+    {
+        "index": 244,
+        "word": "Courage",
+        "level": "Medium",
+        "meaning": "Strength to face fear."
+    },
+    {
+        "index": 245,
+        "word": "Create",
+        "level": "Easy",
+        "meaning": "To make something new."
+    },
+    {
+        "index": 246,
+        "word": "Curiosity",
+        "level": "Medium",
+        "meaning": "A strong desire to learn."
+    },
+    {
+        "index": 247,
+        "word": "Damage",
+        "level": "Medium",
+        "meaning": "Harm that makes something worse."
+    },
+    {
+        "index": 248,
+        "word": "Decision",
+        "level": "Medium",
+        "meaning": "A choice made after thinking."
+    },
+    {
+        "index": 249,
+        "word": "Defend",
+        "level": "Medium",
+        "meaning": "To protect from harm."
+    },
+    {
+        "index": 250,
+        "word": "Deliver",
+        "level": "Medium",
+        "meaning": "To bring something to a place."
+    },
+    {
+        "index": 251,
+        "word": "Demand",
+        "level": "Medium",
+        "meaning": "A strong request or need."
+    },
+    {
+        "index": 252,
+        "word": "Depend",
+        "level": "Medium",
+        "meaning": "To rely on something."
+    },
+    {
+        "index": 253,
+        "word": "Describe",
+        "level": "Medium",
+        "meaning": "To explain using words."
+    },
+    {
+        "index": 254,
+        "word": "Develop",
+        "level": "Hard",
+        "meaning": "To grow or improve over time."
+    },
+    {
+        "index": 255,
+        "word": "Difference",
+        "level": "Medium",
+        "meaning": "How things are not the same."
+    },
+    {
+        "index": 256,
+        "word": "Direction",
+        "level": "Medium",
+        "meaning": "The way something moves."
+    },
+    {
+        "index": 257,
+        "word": "Discover",
+        "level": "Medium",
+        "meaning": "To find something new."
+    },
+    {
+        "index": 258,
+        "word": "Distance",
+        "level": "Medium",
+        "meaning": "The space between two things."
+    },
+    {
+        "index": 259,
+        "word": "Efficient",
+        "level": "Hard",
+        "meaning": "Working without wasting time."
+    },
+    {
+        "index": 260,
+        "word": "Emotion",
+        "level": "Medium",
+        "meaning": "A strong feeling."
+    },
+    {
+        "index": 261,
+        "word": "Encourage",
+        "level": "Medium",
+        "meaning": "To give support or confidence."
+    },
+    {
+        "index": 262,
+        "word": "Environment",
+        "level": "Hard",
+        "meaning": "Surroundings of living things."
+    },
+    {
+        "index": 263,
+        "word": "Establish",
+        "level": "Hard",
+        "meaning": "To set up something firmly."
+    },
+    {
+        "index": 264,
+        "word": "Evaluate",
+        "level": "Hard",
+        "meaning": "To judge quality or value."
+    },
+    {
+        "index": 265,
+        "word": "Evidence",
+        "level": "Hard",
+        "meaning": "Facts that prove something."
+    },
+    {
+        "index": 266,
+        "word": "Experience",
+        "level": "Medium",
+        "meaning": "Knowledge gained by doing."
+    },
+    {
+        "index": 267,
+        "word": "Explain",
+        "level": "Medium",
+        "meaning": "To make something clear."
+    },
+    {
+        "index": 268,
+        "word": "Failure",
+        "level": "Medium",
+        "meaning": "Lack of success."
+    },
+    {
+        "index": 269,
+        "word": "Feature",
+        "level": "Medium",
+        "meaning": "An important part of something."
+    },
+    {
+        "index": 270,
+        "word": "Focus",
+        "level": "Medium",
+        "meaning": "Full attention on one thing."
+    },
+    {
+        "index": 271,
+        "word": "Force",
+        "level": "Medium",
+        "meaning": "Power that causes movement."
+    },
+    {
+        "index": 272,
+        "word": "Function",
+        "level": "Hard",
+        "meaning": "The purpose of something."
+    },
+    {
+        "index": 273,
+        "word": "Generate",
+        "level": "Hard",
+        "meaning": "To produce or create."
+    },
+    {
+        "index": 274,
+        "word": "Goal",
+        "level": "Easy",
+        "meaning": "Something you want to achieve."
+    },
+    {
+        "index": 275,
+        "word": "Growth",
+        "level": "Medium",
+        "meaning": "Increase or development."
+    },
+    {
+        "index": 276,
+        "word": "Habit",
+        "level": "Easy",
+        "meaning": "Something done regularly."
+    },
+    {
+        "index": 277,
+        "word": "Harm",
+        "level": "Medium",
+        "meaning": "Damage or injury."
+    },
+    {
+        "index": 278,
+        "word": "Impact",
+        "level": "Medium",
+        "meaning": "Strong effect on something."
+    },
+    {
+        "index": 279,
+        "word": "Improve",
+        "level": "Medium",
+        "meaning": "To make better."
+    },
+    {
+        "index": 280,
+        "word": "Influence",
+        "level": "Hard",
+        "meaning": "Power to change others."
+    },
+    {
+        "index": 281,
+        "word": "Information",
+        "level": "Medium",
+        "meaning": "Facts or knowledge."
+    },
+    {
+        "index": 282,
+        "word": "Inspire",
+        "level": "Medium",
+        "meaning": "To motivate or encourage."
+    },
+    {
+        "index": 283,
+        "word": "Intelligence",
+        "level": "Hard",
+        "meaning": "Ability to learn and understand."
+    },
+    {
+        "index": 284,
+        "word": "Interest",
+        "level": "Medium",
+        "meaning": "Curiosity or concern."
+    },
+    {
+        "index": 285,
+        "word": "Journey",
+        "level": "Easy",
+        "meaning": "Travel from one place to another."
+    },
+    {
+        "index": 286,
+        "word": "Knowledge",
+        "level": "Medium",
+        "meaning": "Information gained through learning."
+    },
+    {
+        "index": 287,
+        "word": "Limit",
+        "level": "Medium",
+        "meaning": "The point something cannot pass."
+    },
+    {
+        "index": 288,
+        "word": "Logic",
+        "level": "Hard",
+        "meaning": "Clear and sensible thinking."
+    },
+    {
+        "index": 289,
+        "word": "Meaning",
+        "level": "Medium",
+        "meaning": "What something represents."
+    },
+    {
+        "index": 290,
+        "word": "Method",
+        "level": "Medium",
+        "meaning": "A way of doing something."
+    },
+    {
+        "index": 291,
+        "word": "Motivate",
+        "level": "Medium",
+        "meaning": "To make someone want to act."
+    },
+    {
+        "index": 292,
+        "word": "Opportunity",
+        "level": "Medium",
+        "meaning": "A good chance."
+    },
+    {
+        "index": 293,
+        "word": "Outcome",
+        "level": "Medium",
+        "meaning": "The final result."
+    },
+    {
+        "index": 294,
+        "word": "Patience",
+        "level": "Medium",
+        "meaning": "Ability to wait calmly."
+    },
+    {
+        "index": 295,
+        "word": "Progress",
+        "level": "Medium",
+        "meaning": "Movement toward improvement."
+    },
+    {
+        "index": 296,
+        "word": "Purpose",
+        "level": "Medium",
+        "meaning": "The reason something exists."
+    },
+    {
+        "index": 297,
+        "word": "Reflect",
+        "level": "Hard",
+        "meaning": "To think deeply."
+    },
+    {
+        "index": 298,
+        "word": "Result",
+        "level": "Easy",
+        "meaning": "What happens at the end."
+    },
+    {
+        "index": 299,
+        "word": "Strategy",
+        "level": "Hard",
+        "meaning": "A plan to achieve a goal."
+    },
+    {
+        "index": 300,
+        "word": "Success",
+        "level": "Easy",
+        "meaning": "Achieving what you want."
+    }
+]
