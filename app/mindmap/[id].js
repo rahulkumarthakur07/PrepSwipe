@@ -3,28 +3,66 @@ import { ChevronLeft } from 'lucide-react-native';
 import { useEffect, useMemo } from 'react';
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, ZoomIn } from 'react-native-reanimated';
 import Svg, { Circle, Defs, Path, Pattern, Rect } from 'react-native-svg';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import { Shadows, Spacing } from '../../constants/theme';
 import { useGame } from '../../context/GameContext';
 
 const { width, height } = Dimensions.get('window');
-const NODE_WIDTH = 150; // Balanced width
-const NODE_HEIGHT = 80;  // Matches actual node height
-const LEVEL_GAP = 120; // More breathing room
-const NODE_GAP = 20;   // Vertical spacing
-const LAYOUT_TYPE = 'tree'; // Switch to 'radial' for a circular view
+const NODE_WIDTH = 190;
+const LEVEL_GAP = 140; // Increased Gap
+const NODE_GAP = 40;     // Increased Gap
+const MIN_NODE_HEIGHT = 80;
+
+const getNodeWidth = (depth) => {
+    if (depth === 0) return 220; // Root
+    if (depth === 1) return 190; // Branch
+    return 170; // Sub-branch
+};
+
+const LAYOUT_TYPE = 'tree';
+
+const PASTEL_PALETTE = [
+    { main: '#F48FB1', light: '#FCE4EC', dark: '#C2185B' }, // Pink
+    { main: '#81D4FA', light: '#E1F5FE', dark: '#0288D1' }, // Blue
+    { main: '#A5D6A7', light: '#E8F5E9', dark: '#388E3C' }, // Green
+    { main: '#FFCC80', light: '#FFF3E0', dark: '#F57C00' }, // Orange
+    { main: '#B39DDB', light: '#EDE7F6', dark: '#512DA8' }, // Purple
+    { main: '#B0BEC5', light: '#ECEFF1', dark: '#455A64' }, // Slate
+];
+
+const getBranchColor = (depth, branchIndex) => {
+    if (depth === 0) return { main: '#5C6BC0', light: '#E8EAF6', dark: '#3F51B5' };
+    return PASTEL_PALETTE[branchIndex % PASTEL_PALETTE.length];
+};
 
 // Recursive layout calculation
 // Recursive layout calculation
 const MAX_DEPTH = 50;
 
 /**
+ * Heuristic to estimate how tall a node will be based on its text content.
+ */
+const estimateNodeHeight = (node) => {
+    const isRoot = node.depth === 0;
+    const titleLines = Math.ceil((node.label?.length || 0) / (isRoot ? 20 : 25));
+    const noteLines = Math.ceil((node.note?.length || 0) / 30);
+
+    const baseHeight = isRoot ? 50 : 40;
+    const titlePart = titleLines * 20;
+    const notePart = node.note ? (noteLines * 16 + 10) : 0;
+
+    const estimated = baseHeight + titlePart + notePart;
+    return Math.max(estimated, isRoot ? 90 : 70);
+};
+
+/**
  * calculateLayout: Recursively positions nodes in a weighted tree.
  * @param side: -1 for Left, 1 for Right
+ * @param branchIndex: Index of the top-level branch
  */
-const calculateLayout = (node, depth = 0, side = 1, yOffset = { value: 0 }, visited = new Set()) => {
+const calculateLayout = (node, depth = 0, side = 1, branchIndex = 0, yOffset = { value: 0 }, visited = new Set()) => {
     if (!node) return null;
 
     if (visited.has(node.id)) {
@@ -34,7 +72,8 @@ const calculateLayout = (node, depth = 0, side = 1, yOffset = { value: 0 }, visi
             label: `${node.label} (Cycle)`,
             children: [],
             x: 0, y: 0, totalHeight: NODE_HEIGHT + NODE_GAP,
-            side
+            side,
+            branchIndex
         };
     }
 
@@ -45,9 +84,11 @@ const calculateLayout = (node, depth = 0, side = 1, yOffset = { value: 0 }, visi
     const childrenNodes = [];
     let childrenHeight = 0;
 
-    children.forEach(child => {
+    children.forEach((child, i) => {
         if (child) {
-            const childResult = calculateLayout(child, depth + 1, side, yOffset, newVisited);
+            // Inherit branchIndex from level 1
+            const effectiveBranchIndex = depth === 0 ? i : branchIndex;
+            const childResult = calculateLayout(child, depth + 1, side, effectiveBranchIndex, yOffset, newVisited);
             if (childResult) {
                 childrenNodes.push(childResult);
                 childrenHeight += childResult.totalHeight;
@@ -56,12 +97,13 @@ const calculateLayout = (node, depth = 0, side = 1, yOffset = { value: 0 }, visi
     });
 
     const isLeaf = childrenNodes.length === 0;
-    const myHeight = isLeaf ? NODE_HEIGHT + NODE_GAP : childrenHeight;
+    const myHeight = estimateNodeHeight({ ...node, depth });
+    const totalBranchHeight = isLeaf ? myHeight + NODE_GAP : childrenHeight;
 
     let myY;
     if (isLeaf) {
-        myY = yOffset.value + myHeight / 2;
-        yOffset.value += myHeight;
+        myY = yOffset.value + totalBranchHeight / 2;
+        yOffset.value += totalBranchHeight;
     } else {
         const firstY = childrenNodes[0].y;
         const lastY = childrenNodes[childrenNodes.length - 1].y;
@@ -76,14 +118,16 @@ const calculateLayout = (node, depth = 0, side = 1, yOffset = { value: 0 }, visi
         children: children,
         x: Number.isFinite(myX) ? myX : 0,
         y: Number.isFinite(myY) ? myY : 0,
-        totalHeight: Number.isFinite(myHeight) ? myHeight : NODE_HEIGHT,
+        totalHeight: Number.isFinite(totalBranchHeight) ? totalBranchHeight : MIN_NODE_HEIGHT + NODE_GAP,
+        nodeHeight: myHeight,
         processedChildren: childrenNodes,
         side,
-        depth
+        depth,
+        branchIndex
     };
 };
 
-const calculateRadialLayout = (node, depth = 0, angle = 0, arc = 2 * Math.PI, visited = new Set()) => {
+const calculateRadialLayout = (node, depth = 0, angle = 0, arc = 2 * Math.PI, branchIndex = 0, visited = new Set()) => {
     if (!node || depth > MAX_DEPTH || visited.has(node.id)) return null;
 
     const newVisited = new Set(visited).add(node.id);
@@ -101,6 +145,7 @@ const calculateRadialLayout = (node, depth = 0, angle = 0, arc = 2 * Math.PI, vi
         const arcPerChild = arc / children.length;
 
         children.forEach((child, i) => {
+            const effectiveBranchIndex = depth === 0 ? i : branchIndex;
             const childAngle = depth === 0
                 ? (i / children.length) * 2 * Math.PI
                 : startAngle + (i + 0.5) * arcPerChild;
@@ -108,7 +153,7 @@ const calculateRadialLayout = (node, depth = 0, angle = 0, arc = 2 * Math.PI, vi
             // At deeper levels, we tighten the arc to keep clusters together
             const nextArc = depth === 0 ? (2 * Math.PI) / children.length : arcPerChild * 0.8;
 
-            const result = calculateRadialLayout(child, depth + 1, childAngle, nextArc, newVisited);
+            const result = calculateRadialLayout(child, depth + 1, childAngle, nextArc, effectiveBranchIndex, newVisited);
             if (result) processedChildren.push(result);
         });
     }
@@ -117,6 +162,7 @@ const calculateRadialLayout = (node, depth = 0, angle = 0, arc = 2 * Math.PI, vi
         ...node,
         x, y, depth, side: 0, // Side is 0 for radial
         angle,
+        branchIndex,
         processedChildren
     };
 };
@@ -129,16 +175,19 @@ const processGraph = (root) => {
     let minX = 0, maxX = 0, minY = 0, maxY = 0;
 
     if (LAYOUT_TYPE === 'radial') {
-        layoutTree = calculateRadialLayout(root, 0, 0, 2 * Math.PI);
+        layoutTree = calculateRadialLayout(root, 0, 0, 2 * Math.PI, 0);
     } else {
         const children = Array.isArray(root.children) ? root.children : [];
         const leftChildren = children.slice(0, Math.ceil(children.length / 2));
         const rightChildren = children.slice(Math.ceil(children.length / 2));
         const leftOffset = { value: 0 };
         const rightOffset = { value: 0 };
-        const leftResults = leftChildren.map(c => calculateLayout(c, 1, -1, leftOffset));
-        const rightResults = rightChildren.map(c => calculateLayout(c, 1, 1, rightOffset));
-        const maxHeight = Math.max(leftOffset.value, rightOffset.value, NODE_HEIGHT);
+
+        // Use proper branch indices for left/right split
+        const leftResults = leftChildren.map((c, i) => calculateLayout(c, 1, -1, i, leftOffset));
+        const rightResults = rightChildren.map((c, i) => calculateLayout(c, 1, 1, leftChildren.length + i, rightOffset));
+
+        const maxHeight = Math.max(leftOffset.value, rightOffset.value, MIN_NODE_HEIGHT);
         const leftShift = (maxHeight - leftOffset.value) / 2;
         const rightShift = (maxHeight - rightOffset.value) / 2;
         const shiftSubtree = (node, shift) => {
@@ -155,7 +204,9 @@ const processGraph = (root) => {
             x: 0,
             y: maxHeight / 2,
             depth: 0,
+            nodeHeight: estimateNodeHeight({ ...root, depth: 0 }), // Calculate root height
             side: 0,
+            branchIndex: 0,
             processedChildren: [...leftResults, ...rightResults].filter(Boolean)
         };
     }
@@ -165,7 +216,17 @@ const processGraph = (root) => {
 
     const flatten = (node) => {
         if (!node) return;
-        nodes.push({ id: node.id, label: node.label, note: node.note, x: node.x, y: node.y, depth: node.depth, side: node.side || 0 });
+        nodes.push({
+            id: node.id,
+            label: node.label,
+            note: node.note,
+            x: node.x,
+            y: node.y,
+            depth: node.depth,
+            nodeHeight: node.nodeHeight, // Propagate estimated height
+            side: node.side || 0,
+            branchIndex: node.branchIndex
+        });
         minX = Math.min(minX, node.x);
         maxX = Math.max(maxX, node.x);
         minY = Math.min(minY, node.y);
@@ -173,8 +234,8 @@ const processGraph = (root) => {
 
         node.processedChildren?.forEach(child => {
             edges.push({
-                from: { x: node.x, y: node.y, side: node.side || 0, depth: node.depth },
-                to: { x: child.x, y: child.y, side: child.side || 0, depth: child.depth }
+                from: { x: node.x, y: node.y, side: node.side || 0, depth: node.depth, branchIndex: node.branchIndex },
+                to: { x: child.x, y: child.y, side: child.side || 0, depth: child.depth, branchIndex: child.branchIndex }
             });
             flatten(child);
         });
@@ -289,86 +350,72 @@ function MindmapDetailScreenContent() {
         return (
             <Svg width={dimensions.width} height={dimensions.height} style={styles.svgLayer}>
                 <Defs>
-                    {/* Dot Grid */}
+                    {/* Dot Pattern */}
                     <Pattern
                         id="dots"
                         x="0"
                         y="0"
-                        width="40"
-                        height="40"
+                        width="30"
+                        height="30"
                         patternUnits="userSpaceOnUse"
                     >
                         <Circle
                             cx="2"
                             cy="2"
-                            r="1.2"
+                            r="1"
                             fill={colors.text}
                             fillOpacity={0.08}
                         />
                     </Pattern>
-
-                    {/* Graph Paper Lines */}
-                    <Pattern
-                        id="grid"
-                        x="0"
-                        y="0"
-                        width="200"
-                        height="200"
-                        patternUnits="userSpaceOnUse"
-                    >
-                        <Path
-                            d="M 200 0 L 0 0 0 200"
-                            fill="none"
-                            stroke={colors.text}
-                            strokeWidth="1"
-                            strokeOpacity="0.05"
-                        />
-                    </Pattern>
                 </Defs>
 
-                {/* Background Layer */}
+                {/* Theme-aware Background */}
                 <Rect width="100%" height="100%" fill={colors.background} />
-                <Rect width="100%" height="100%" fill="url(#grid)" />
                 <Rect width="100%" height="100%" fill="url(#dots)" />
 
-                {edges.map((edge, i) => {
-                    const { from, to } = edge;
+                {
+                    edges.map((edge, i) => {
+                        const { from, to } = edge;
+                        const branchColor = getBranchColor(to.depth, to.branchIndex);
+                        const strokeColor = branchColor.main;
 
-                    let d;
+                        // Variable thickness based on depth for better hierarchy
+                        const strokeWidth = to.depth === 1 ? 5 : (to.depth === 2 ? 3 : 2);
 
-                    if (LAYOUT_TYPE === 'radial') {
-                        // Simple straight edges for radial (more Obsidan-like) 
-                        // or very subtle curves.
-                        d = `M${from.x},${from.y} L${to.x},${to.y}`;
-                    } else {
-                        // Determine horizontal anchor points based on side
-                        // Root (side 0) spreads to both
-                        const fromX = from.depth === 0 ? from.x + (to.side * (NODE_WIDTH / 2)) : from.x + (from.side * (NODE_WIDTH / 2));
-                        const toX = to.x - (to.side * (NODE_WIDTH / 2));
+                        let d;
 
-                        const fromY = from.y;
-                        const toY = to.y;
+                        if (LAYOUT_TYPE === 'radial') {
+                            d = `M${from.x},${from.y} L${to.x},${to.y}`;
+                        } else {
+                            // Adjust anchor points for hierarchical scaling
+                            const fromWidth = getNodeWidth(from.depth);
+                            const toWidth = getNodeWidth(to.depth);
 
-                        // Control points for smooth S-curves
-                        const cp1X = fromX + (to.side * LEVEL_GAP / 2);
-                        const cp2X = toX - (to.side * LEVEL_GAP / 2);
+                            const fromX = from.depth === 0 ? from.x + (to.side * (fromWidth / 2)) : from.x + (from.side * (fromWidth / 2));
+                            const toX = to.x - (to.side * (toWidth / 2));
+                            const fromY = from.y;
+                            const toY = to.y;
 
-                        d = `M${fromX},${fromY} C${cp1X},${fromY} ${cp2X},${toY} ${toX},${toY}`;
-                    }
+                            const cp1X = fromX + (to.side * LEVEL_GAP / 2);
+                            const cp2X = toX - (to.side * LEVEL_GAP / 2);
 
-                    return (
-                        <Path
-                            key={i}
-                            d={d}
-                            stroke={colors.text}
-                            strokeOpacity={0.2}
-                            strokeWidth={4} // Thicker, more cartoonish lines
-                            fill="none"
-                            strokeLinecap="round"
-                        />
-                    );
-                })}
-            </Svg>
+                            d = `M${fromX},${fromY} C${cp1X},${fromY} ${cp2X},${toY} ${toX},${toY}`;
+                        }
+
+                        return (
+                            <Path
+                                key={i}
+                                d={d}
+                                stroke={strokeColor}
+                                strokeOpacity={to.depth === 1 ? 0.7 : 0.4}
+                                strokeWidth={strokeWidth}
+                                fill="none"
+                                strokeLinecap="round"
+                            />
+                        );
+                    })
+                }
+            </Svg >
         );
     }, [edges, dimensions, colors]);
 
@@ -399,7 +446,7 @@ function MindmapDetailScreenContent() {
         <View style={{ flex: 1 }}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
                 {/* Subtle Grid Background */}
-                <View style={[StyleSheet.absoluteFill, { opacity: 0.05, backgroundColor: colors.text }]} pointerEvents="none" />
+                {/* <View style={[StyleSheet.absoluteFill, { opacity: 0.05, backgroundColor: colors.text }]} pointerEvents="none" /> */}
 
                 {/* Header Overlay */}
                 <View style={styles.header}>
@@ -420,82 +467,68 @@ function MindmapDetailScreenContent() {
 
                         {edgesLayer}
 
-                        {/* Nodes Layer */}
-                        {(nodes || []).map(node => {
+                        {(nodes || []).map((node, index) => {
                             const isRoot = node.depth === 0;
-                            const nodeColor = getNodeColor(node.depth, colors);
+                            const branchColor = getBranchColor(node.depth, node.branchIndex);
+
+                            // Adjust colors based on theme and depth
+                            const isDark = colors.background === '#121212' || colors.background === '#1A1A1A';
+                            const bgColor = isRoot ? branchColor.main : (node.depth === 1 ? branchColor.main : (isDark ? branchColor.dark : branchColor.light));
+                            const borderColor = isRoot ? colors.text : (isDark ? '#FFF' : '#000'); // Bold black in light, white in dark
+
+                            const nodeWidth = getNodeWidth(node.depth);
 
                             return (
-                                <View
+                                <Animated.View
                                     key={node.id}
+                                    entering={ZoomIn.delay(index * 20).springify().mass(0.5)}
                                     style={[
                                         styles.node,
                                         {
-                                            left: node.x - (isRoot ? 100 : 85),
-                                            top: node.y - (isRoot ? 50 : 40),
-                                            width: isRoot ? 200 : 170,
-                                            height: isRoot ? 100 : 80,
-                                            backgroundColor: isRoot ? nodeColor : colors.card,
-                                            borderColor: colors.border,
-                                            borderWidth: 4, // Thicker border
-                                            // Playful irregular border radius
-                                            borderTopLeftRadius: isRoot ? 25 : 15,
-                                            borderTopRightRadius: isRoot ? 40 : 25,
-                                            borderBottomLeftRadius: isRoot ? 15 : 30,
-                                            borderBottomRightRadius: isRoot ? 35 : 20,
-                                            // Side indicator
-                                            borderLeftWidth: (isRoot || node.side === 1) ? 4 : 10,
-                                            borderRightWidth: (node.side === -1) ? 10 : 4,
-                                            borderLeftColor: (node.side === -1 && !isRoot) ? colors.border : nodeColor,
-                                            borderRightColor: (node.side === 1 && !isRoot) ? nodeColor : colors.border,
+                                            left: node.x - (nodeWidth / 2),
+                                            top: node.y - (node.nodeHeight / 2),
+                                            width: nodeWidth,
+                                            minHeight: node.nodeHeight,
+                                            backgroundColor: bgColor,
+                                            borderColor: borderColor,
+                                            borderWidth: 2.5,
+                                            borderRadius: isRoot ? 16 : 12, // Squared look
                                             zIndex: 10 + node.depth,
-                                            shadowColor: colors.text, // Bold black shadow
-                                            shadowOffset: { width: 6, height: 6 },
-                                            shadowOpacity: 1,
-                                            shadowRadius: 0,
-                                            elevation: 8,
+                                            paddingVertical: 12,
+                                            paddingHorizontal: 12,
                                         }
                                     ]}
                                 >
-                                    {/* Paperclip decoration for root */}
-                                    {isRoot && (
-                                        <View style={[styles.paperclip, { backgroundColor: colors.secondary, borderColor: colors.border }]} />
-                                    )}
-
                                     <View style={{ flex: 1, justifyContent: 'center', width: '100%' }}>
                                         <Text
                                             style={[
                                                 styles.nodeText,
                                                 {
-                                                    color: isRoot ? '#FFF' : colors.text,
-                                                    fontSize: isRoot ? 16 : 13, // Slightly larger text
+                                                    color: (isRoot || node.depth === 1) ? '#FFF' : colors.text,
+                                                    fontSize: isRoot ? 16 : 13,
                                                     fontWeight: '900',
-                                                    marginBottom: node.note ? 4 : 0,
-                                                    textShadowColor: isRoot ? 'rgba(0,0,0,0.3)' : 'transparent',
-                                                    textShadowOffset: { width: 1, height: 1 },
-                                                    textShadowRadius: 1,
+                                                    lineHeight: isRoot ? 20 : 16,
                                                 }
                                             ]}
-                                            numberOfLines={2}
                                         >
                                             {node.label}
                                         </Text>
                                         {node.note && (
                                             <Text
                                                 style={{
-                                                    color: isRoot ? 'rgba(255,255,255,0.9)' : colors.textSecondary,
-                                                    fontSize: 10,
-                                                    fontWeight: '700',
-                                                    lineHeight: 12,
-                                                    textAlign: 'center'
+                                                    color: (isRoot || node.depth === 1) ? '#FFF' : colors.text,
+                                                    fontSize: 11,
+                                                    fontWeight: '400', // Regular weight for definitions
+                                                    textAlign: 'center',
+                                                    marginTop: 6,
+                                                    opacity: 0.9,
                                                 }}
-                                                numberOfLines={3}
                                             >
                                                 {node.note}
                                             </Text>
                                         )}
                                     </View>
-                                </View>
+                                </Animated.View>
                             );
                         })}
 
@@ -574,23 +607,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10,
-        // Neo-Brutalist Shadow (Native)
+        // Pill-style Shadow
         shadowColor: '#000',
-        shadowOffset: { width: 8, height: 8 },
-        shadowOpacity: 1,
-        shadowRadius: 0,
-    },
-    paperclip: {
-        position: 'absolute',
-        top: -15,
-        right: 20,
-        width: 12,
-        height: 40,
-        borderRadius: 6,
-        borderWidth: 3,
-        zIndex: 50,
-        transform: [{ rotate: '15deg' }],
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        elevation: 4,
     },
     nodeText: {
         textAlign: 'center',
